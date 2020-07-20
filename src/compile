@@ -1,0 +1,2 @@
+javac -d /home/darki/java/messenger/bin echoClient.java
+javac -d /home/darki/java/messenger/bin echoServer.java

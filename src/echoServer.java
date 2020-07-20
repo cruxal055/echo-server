@@ -25,12 +25,6 @@ public class echoServer
         in = new Scanner(socket.getInputStream());
         terminate = 0;
     }
-    public echoServer() throws IOException,  InterruptedException
-    {
-        serverSocket = new ServerSocket(20000);
-        init();
-        performTasks();
-    }
 
     public echoServer(int port) throws IOException,  InterruptedException
     {
@@ -39,44 +33,20 @@ public class echoServer
         performTasks();
     }
 
-    private void closeFDs() throws IOException
-    {
-        serverSocket.close();
-        socket.close();
-        out.close();
-        in.close();
-    }
 
    private void performTasks() throws IOException, InterruptedException
    {
-
-       Signal.handle(new Signal("INT"), signal ->
+       while(true)
        {
-           System.out.println("Terminating Client..");
-           try
-           {
-               serverSocket.close();
-               socket.close();
-
-           }
-           catch (IOException e)
-           {
-               e.printStackTrace();
-           }
-           out.close();
-           in.close();
-           exit(1);
-       } );
-       String data;
-       while(true && terminate == 0)
-       {
-           data = in.nextLine();
-           System.out.println("I received: " + data);
-           out.write(("You sent: " + data + '\n'));
-           out.flush();
-           System.out.println("echoed back a response\n");
+           socket = serverSocket.accept();
+           System.out.println("server recieved a connection!");
+           out = new PrintWriter(socket.getOutputStream()); //clientSock.getOutputStream gives us the FD of the client
+           in = new Scanner(socket.getInputStream());
+           Thread temp = new Thread(new execute(out, in));
+           temp.start();
        }
-       closeFDs();
+
+
    }
    public static void main(String args[]) throws IOException,  InterruptedException
    {

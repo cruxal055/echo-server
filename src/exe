@@ -1,0 +1,9 @@
+cd ..
+cd bin
+ls
+for x in 3
+do
+gnome-terminal -e java echoServer
+gnome-terminal -e java echoClient
+gnome-terminal -e java echoClient
+done

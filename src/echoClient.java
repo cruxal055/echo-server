@@ -30,6 +30,7 @@ public class echoClient
             {
                 e.printStackTrace();
             }
+            System.out.println("sucuessfully terminated");
             exit(1);
         } );
 
@@ -44,7 +45,6 @@ public class echoClient
             response = retrieve.readLine();
             System.out.println("server responded with: " + response);
         }
-        System.out.println("sucuessfully terminated");
     }
     public static void main(String args[]) throws IOException
     {
